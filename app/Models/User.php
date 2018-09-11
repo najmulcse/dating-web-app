@@ -1,7 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Like\Like;
+use App\Location\Location;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -26,4 +28,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class,'likeable');
+    }
+
+    public function location()
+    {
+        return $this->hasOne(Location::class);
+    }
+
 }
