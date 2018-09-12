@@ -20,8 +20,13 @@ class UserController extends Controller
        $existing_like =  Like::where('likeable_id', Auth::id())
                 ->where('user_id',$id)
                 ->first();
+        $message = 'Updated';
        if(!is_null($existing_like)){
            $existing_like->update(['is_like' => !$existing_like->is_like]);
+
+           if($this->isMutual($id)){
+               $message = 'Matched!';
+           }
        }else{
            Auth()->user()->likes()->create([
                'likeable_type' => User::class,
@@ -30,7 +35,18 @@ class UserController extends Controller
            ]);
        }
 
-       return back();
+       return back()->with('message', $message);
 
+    }
+
+    private function isMutual($id)
+    {
+       return Like::where('likeable_id', $id)
+            ->where('user_id',Auth::id())
+            ->where( function($query) use ($id){
+                $query->where('likeable_id', Auth::id())
+                    ->where('user_id',$id);
+            })
+           ->where('is_like', true)->first();
     }
 }

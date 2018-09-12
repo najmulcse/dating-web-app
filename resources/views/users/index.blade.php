@@ -10,6 +10,9 @@
                         <h2>All Users</h2>
                     </div>
                     <div class="card-body">
+                        @if(session('message'))
+                            {{session('message')}}
+                        @endif
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -46,5 +49,10 @@
         </div>
     </div>
 
+    <script>
+       document.ready( function(){
+
+       });
+    </script>
 
 @stop
