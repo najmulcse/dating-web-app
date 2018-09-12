@@ -46,4 +46,12 @@ class User extends Authenticatable
         $diff = date_diff(date_create($dateOfBirth), date_create($today));
         return $diff->format('%y');
     }
+
+    public function isLiked($user)
+    {
+        return $this->likes()->where('user_id',$user)
+                        ->where('is_like', true)
+                        ->exists();
+    }
+
 }

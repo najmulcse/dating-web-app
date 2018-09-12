@@ -18,16 +18,22 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Age</th>
+                                <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                           @forelse($users as $id =>$user)
+                           @forelse($users as $id => $user)
                             <tr>
                                 <th scope="row">{{ ++$id }}</th>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->gender }}</td>
                                 <td>{{ $user->age }}</td>
+                                <td>
+                                    <a href="{{ route('like.createOrToggle',[$user]) }}" class="btn-link">
+                                        {{ Auth::user()->isLiked($user->id) ? 'Unlike':'Like' }}
+                                    </a>
+                                </td>
                             </tr>
                             @empty
                                <h4> No user available</h4>

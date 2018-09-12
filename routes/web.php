@@ -19,3 +19,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/users', 'UserController@users')->name('users.list');
+Route::get('/createOrToggleLike/{user}', 'UserController@createOrToggleLike')->name('like.createOrToggle');
