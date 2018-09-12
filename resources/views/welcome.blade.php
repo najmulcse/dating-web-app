@@ -1,6 +1,15 @@
-@extends('layouts.master')
+@extends('layouts.app')
+
 @section('content')
-    <div class="row">
-        <h2 class="text-center">Welcome to web dating app</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Welcome to dating app
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-@stop
+@endsection

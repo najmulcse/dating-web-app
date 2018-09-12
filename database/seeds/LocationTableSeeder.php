@@ -12,7 +12,7 @@ class LocationTableSeeder extends Seeder
     public function run()
     {
       $faker = \Faker\Factory::create();
-      $userIds = \App\Models\User::pluck('id')->toArray();
+      $userIds = \App\User::pluck('id')->toArray();
       $locations = [];
       foreach ( $userIds as $userId){
           $location['latitude'] = $faker->numberBetween(100.9222,30023.232);

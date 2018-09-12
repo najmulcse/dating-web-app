@@ -12,7 +12,7 @@ class LikeTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $userIds = \App\Models\User::pluck('id')->toArray();
+        $userIds = \App\User::pluck('id')->toArray();
         $likes = [];
         foreach( $userIds as $userId){
             $like['likeable_type'] = 'User';
