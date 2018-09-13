@@ -49,4 +49,22 @@ class UserController extends Controller
             })
            ->where('is_like', true)->first();
     }
+
+    public function nearUsers()
+    {
+        return $this->scopeDistance(32,43,34);
+    }
+
+    public function scopeDistance( $lat, $long, $distance)
+    {
+        return User::all()->filter(function ($user) use ($lat, $long, $distance) {
+            $actual = 3959 * acos(
+                    cos(deg2rad($lat)) * cos(deg2rad($user->latitude))
+                    * cos(deg2rad($user->longitude) - deg2rad($long))
+                    + sin(deg2rad($lat)) * sin(deg2rad($user->latitude))
+                );
+            
+            return $distance < $actual;
+        });
+    }
 }

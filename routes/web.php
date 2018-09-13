@@ -35,7 +35,8 @@ Route::group(['namespace'=>'Auth'], function(){
 
 Route::group(['middleware' => 'auth'], function () {
 
-        Route::get('/users', 'UserController@users')->name('users.list');
+        Route::get('/users', 'UserController@users')->name('near.users.list');
+        Route::get('/near-users', 'UserController@nearUsers')->name('users.list');
         Route::get('/toggleLike/{user}', 'UserController@toggleLike')->name('like.createOrToggle');
 
 });
