@@ -75,12 +75,11 @@
                    id :id
                }
                axios.post(url,data).then(function( response){
-                    console.log(response.data.is_mutual);
-
-                    if(response.data.is_mutual === true){
-                        alertify.alert("Matched! Both of you liked each other.");
-                    }
                    alertify.success("Status updated");
+                    if(response.data.is_mutual === true){
+                        alertify.alert("It's a Match!");
+                    }
+
                    setTimeout(function(){
                        window.location.reload();
                    }, 2000);

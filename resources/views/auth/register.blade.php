@@ -107,32 +107,32 @@
 @endsection
 
 @section('scripts')
-    {{--<script>--}}
+    <script>
 
 
-            {{--var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),--}}
-                {{--location={--}}
-                    {{--latitude:'',--}}
-                    {{--longitude:''--}}
-                {{--};--}}
+            var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
+                location={
+                    latitude:'',
+                    longitude:''
+                };
 
-            {{--if (navigator.geolocation){--}}
-                {{--navigator.geolocation.getCurrentPosition(showPosition);--}}
-            {{--}--}}
-            {{--else{--}}
-                {{--latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";--}}
-            {{--}--}}
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else{
+                latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+            }
 
-            {{--function showPosition(position){--}}
-                {{--location.latitude=position.coords.latitude;--}}
-                {{--location.longitude=position.coords.longitude;--}}
-                {{--alert(location.latitude);--}}
-                {{--alert(location.longitude);--}}
+            function showPosition(position){
+                location.latitude=position.coords.latitude;
+                location.longitude=position.coords.longitude;
+                alert(location.latitude);
+                alert(location.longitude);
 
-                {{--console.log(location.latitude);--}}
-                {{--console.log(location.longitude);--}}
-            {{--}--}}
+                console.log(location.latitude);
+                console.log(location.longitude);
+            }
 
-    {{--</script>--}}
+    </script>
 @stop
 

@@ -62,18 +62,6 @@ class UserController extends Controller
                 ->where('is_like', true);
         })->count() == 2;
     }
-    private function getMutualLikeUsers()
-    {
-       $likeableUserIds = auth()->user()->likes
-           ->where('is_like', true)->pluck('id')->toArray();
-       $likedUsers = Like::whereIn('likeable_id',$likeableUserIds)
-           ->where('likeable_type', User::class)
-           ->where('user_id', auth()->id())
-           ->where('is_like', true)
-           ->get();
-       return $likedUsers;
-    }
-
 
     public function getUsersFromCurrentLocation( $lat, $long, $distance)
     {
@@ -83,7 +71,7 @@ class UserController extends Controller
                     * cos(deg2rad($user->longitude) - deg2rad($long))
                     + sin(deg2rad($lat)) * sin(deg2rad($user->latitude))
                 );
-            
+
             return $distance > $actual;
         });
     }
