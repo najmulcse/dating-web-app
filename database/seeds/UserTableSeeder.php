@@ -14,17 +14,23 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Admin',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('admin'),
-                'date_of_birth' => now(),
-                'gender' => 'Male'],
+                'name' => 'Kalam',
+                'email' => 'kalam@gmail.com',
+                'password' => Hash::make('kalam1'),
+                'date_of_birth' => now()->subYears(20),
+                'gender' => 'Male',
+                'latitude' => 12.343,
+                'longitude' => 77.343434,
+            ],
+
             [
                 'name' => 'Najmul',
                 'email' => 'najmul@gmail.com',
                 'password' => Hash::make('najmul'),
-                'date_of_birth' => now(),
-                'gender' => 'Male'
+                'date_of_birth' => now()->subYear(23),
+                'gender' => 'Male',
+                'latitude' => 87.343,
+                'longitude' => 99.343434
             ]
 
         ]);

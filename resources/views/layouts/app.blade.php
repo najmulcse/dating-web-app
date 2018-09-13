@@ -44,9 +44,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Log in') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign up') }}</a>
-                            </li>
+
                         @else
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('users.list') }}"> Users List </a>

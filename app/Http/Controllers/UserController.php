@@ -15,7 +15,7 @@ class UserController extends Controller
         $users =  User::all()->except(Auth::id());
         return view('users.index',compact('users'));
     }
-    public function createOrToggleLike( $id)
+    public function toggleLike( $id)
     {
        $existing_like =  Like::where('likeable_id', Auth::id())
                 ->where('user_id',$id)

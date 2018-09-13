@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','date_of_birth','gender'
+        'name', 'email', 'password','date_of_birth','gender','latitude','longitude','avatar'
     ];
 
     /**
@@ -32,11 +32,6 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->morphMany(Like::class,'likeable');
-    }
-
-    public function location()
-    {
-        return $this->hasOne(Location::class);
     }
 
     public function getAgeAttribute()

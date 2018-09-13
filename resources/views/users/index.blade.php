@@ -11,13 +11,16 @@
                     </div>
                     <div class="card-body">
                         @if(session('message'))
-                            {{session('message')}}
+                            <div class="alert alert-success">
+                                {{session('message')}}
+                            </div>
                         @endif
                         <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Age</th>
@@ -29,6 +32,9 @@
                             <tr>
                                 <th scope="row">{{ ++$id }}</th>
                                 <td>{{ $user->name }}</td>
+                                <td>
+                                    <img src="{{ $user->avatar }}" alt="Picture" height="200px" width="100px">
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->gender }}</td>
                                 <td>{{ $user->age }}</td>
