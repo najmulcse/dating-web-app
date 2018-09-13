@@ -18,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
+    <link href="{{ asset('css/alertify.core.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/alertify.default.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -44,8 +46,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Log in') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign up') }}</a>
+                            </li>
 
                         @else
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route('near.users.list') }}"> Nearest(5km) Users List </a>
+                            </li>
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('users.list') }}"> Users List </a>
                             </li>
@@ -76,5 +84,9 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/jquery.min.js') }}"> </script>
+    <script src="{{ asset('js/alertify.min.js') }}"> </script>
+
+    @yield('scripts')
 </body>
 </html>

@@ -12,50 +12,70 @@ class UserController extends Controller
 
     public function users()
     {
+        $mutualUsers = $this->getMutualLikeUsers();
+
         $users =  User::all()->except(Auth::id());
-        return view('users.index',compact('users'));
+        return view('users.index',compact('users','mutualUsers'));
     }
-    public function toggleLike( $id)
+
+    public function nearUsers()
+    {
+
+        $users = $this->getUsersFromCurrentLocation(23.768064400000004,90.3588037,3.10686);
+        return view('users.near-user-list',compact('users'));
+    }
+
+    public function toggleLike( Request $request)
     {
        $existing_like =  Like::where('likeable_id', Auth::id())
-                ->where('user_id',$id)
+                ->where('user_id',$request->id)
                 ->first();
-        $message = 'Updated';
+
        if(!is_null($existing_like)){
            $existing_like->update(['is_like' => !$existing_like->is_like]);
 
-           if($this->isMutual($id)){
-               $message = 'Matched!';
-           }
        }else{
            Auth()->user()->likes()->create([
                'likeable_type' => User::class,
                'is_like'       => true,
-               'user_id'       => $id
+               'user_id'       => $request->id
            ]);
        }
+       $is_mutual = $this->isMutual($request->id);
 
-       return back()->with('message', $message);
+        return response()->json(['is_mutual'=> $is_mutual]);
 
     }
 
     private function isMutual($id)
     {
-       return Like::where('likeable_id', $id)
-            ->where('user_id',Auth::id())
-            ->where( function($query) use ($id){
-                $query->where('likeable_id', Auth::id())
-                    ->where('user_id',$id);
-            })
-           ->where('is_like', true)->first();
+        return  Like::where(function($query) use ( $id ){
+            $query->where('likeable_id', auth()->id())
+                ->where('user_id', $id)
+                ->where('likeable_type', User::class)
+                ->where('is_like', true);
+        })
+        ->orWhere(function($query) use ( $id ){
+            $query->where('likeable_id', $id)
+                ->where('user_id', auth()->id())
+                ->where('likeable_type', User::class)
+                ->where('is_like', true);
+        })->count() == 2;
     }
-
-    public function nearUsers()
+    private function getMutualLikeUsers()
     {
-        return $this->scopeDistance(32,43,34);
+       $likeableUserIds = auth()->user()->likes
+           ->where('is_like', true)->pluck('id')->toArray();
+       $likedUsers = Like::whereIn('likeable_id',$likeableUserIds)
+           ->where('likeable_type', User::class)
+           ->where('user_id', auth()->id())
+           ->where('is_like', true)
+           ->get();
+       return $likedUsers;
     }
 
-    public function scopeDistance( $lat, $long, $distance)
+
+    public function getUsersFromCurrentLocation( $lat, $long, $distance)
     {
         return User::all()->filter(function ($user) use ($lat, $long, $distance) {
             $actual = 3959 * acos(
@@ -64,7 +84,7 @@ class UserController extends Controller
                     + sin(deg2rad($lat)) * sin(deg2rad($user->latitude))
                 );
             
-            return $distance < $actual;
+            return $distance > $actual;
         });
     }
 }

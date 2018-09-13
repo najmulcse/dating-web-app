@@ -67,6 +67,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'gender' => $data['gender'],
             'date_of_birth' => $data['date_of_birth'],
+            'latitude' => 23.768064400000004,
+            'longitude' => 90.3588037,
             'password' => bcrypt($data['password']),
         ]);
     }

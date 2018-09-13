@@ -24,6 +24,10 @@ Route::group(['namespace'=>'Auth'], function(){
     Route::post('login', 'LoginController@login');
     Route::post('logout', 'LoginController@logout')->name('logout');
 
+    // Registration Routes...
+    Route::get('register', 'RegisterController@showRegistrationForm')->middleware(['guest'])->name('register');
+    Route::post('register', 'RegisterController@register');
+
 // Password Reset Routes...
     Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -35,8 +39,10 @@ Route::group(['namespace'=>'Auth'], function(){
 
 Route::group(['middleware' => 'auth'], function () {
 
-        Route::get('/users', 'UserController@users')->name('near.users.list');
-        Route::get('/near-users', 'UserController@nearUsers')->name('users.list');
-        Route::get('/toggleLike/{user}', 'UserController@toggleLike')->name('like.createOrToggle');
+        Route::get('/users', 'UserController@users')->name('users.list');
+        Route::get('/near-users', 'UserController@nearUsers')->name('near.users.list');
+        Route::post('/toggleLike', 'UserController@toggleLike')->name('like.createOrToggle');
+
+
 
 });

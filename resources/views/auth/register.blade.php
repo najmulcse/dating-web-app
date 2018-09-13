@@ -29,7 +29,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="get-location form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -37,6 +37,7 @@
                                     </span>
                                 @endif
                             </div>
+                            <div id="latitudeAndLongitude"></div>
                         </div>
                         <div class="form-group row">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
@@ -91,7 +92,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary form-submit">
                                     {{ __('Register') }}
                                 </button>
                             </div>
@@ -105,4 +106,33 @@
 
 @endsection
 
+@section('scripts')
+    {{--<script>--}}
+
+
+            {{--var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),--}}
+                {{--location={--}}
+                    {{--latitude:'',--}}
+                    {{--longitude:''--}}
+                {{--};--}}
+
+            {{--if (navigator.geolocation){--}}
+                {{--navigator.geolocation.getCurrentPosition(showPosition);--}}
+            {{--}--}}
+            {{--else{--}}
+                {{--latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";--}}
+            {{--}--}}
+
+            {{--function showPosition(position){--}}
+                {{--location.latitude=position.coords.latitude;--}}
+                {{--location.longitude=position.coords.longitude;--}}
+                {{--alert(location.latitude);--}}
+                {{--alert(location.longitude);--}}
+
+                {{--console.log(location.latitude);--}}
+                {{--console.log(location.longitude);--}}
+            {{--}--}}
+
+    {{--</script>--}}
+@stop
 

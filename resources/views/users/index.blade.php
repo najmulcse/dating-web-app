@@ -10,9 +10,10 @@
                         <h2>All Users</h2>
                     </div>
                     <div class="card-body">
-                        @if(session('message'))
+                        @if(session('is_mutual'))
                             <div class="alert alert-success">
-                                {{session('message')}}
+
+                                {{session('is_mutual')}}
                             </div>
                         @endif
                         <table class="table table-striped">
@@ -37,9 +38,12 @@
                                 </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->gender }}</td>
-                                <td>{{ $user->age }}</td>
+                                <td>{{ $user->age }} year(s)</td>
                                 <td>
-                                    <a href="{{ route('like.createOrToggle',[$user]) }}" class="btn-link">
+                                    <a  data-action="{{ route('like.createOrToggle') }}"
+                                        href=""
+                                        class="btn-link like-unlike"
+                                        data-id="{{ $user->id }}">
                                         {{ Auth::user()->isLiked($user->id) ? 'Unlike':'Like' }}
                                     </a>
                                 </td>
@@ -55,10 +59,36 @@
         </div>
     </div>
 
+
+
+@stop
+
+@section('scripts')
+
     <script>
-       document.ready( function(){
+        $(document).ready( function(){
+           $('.like-unlike').on('click', function(e){
+               e.preventDefault();
+               let url = $(this).attr('data-action');
+               let id = $(this).attr('data-id');
+               let data = {
+                   id :id
+               }
+               axios.post(url,data).then(function( response){
+                    console.log(response.data.is_mutual);
 
-       });
+                    if(response.data.is_mutual === true){
+                        alertify.alert("Matched! Both of you liked each other.");
+                    }
+                   alertify.success("Status updated");
+                   setTimeout(function(){
+                       window.location.reload();
+                   }, 2000);
+               }).catch(function(error){
+
+               });
+           });
+
+        });
     </script>
-
 @stop
