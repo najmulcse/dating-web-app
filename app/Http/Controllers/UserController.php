@@ -12,8 +12,6 @@ class UserController extends Controller
 
     public function users()
     {
-        $mutualUsers = $this->getMutualLikeUsers();
-
         $users =  User::all()->except(Auth::id());
         return view('users.index',compact('users','mutualUsers'));
     }

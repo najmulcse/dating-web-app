@@ -52,7 +52,7 @@
 
                         @else
                             <li class="nav-item">
-                                <a  class="nav-link" href="{{ route('near.users.list') }}"> Nearest(5km) Users List </a>
+                                <a  class="nav-link" href="{{ route('near.users.list') }}"> Nearest Users(5km)  </a>
                             </li>
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('users.list') }}"> Users List </a>
