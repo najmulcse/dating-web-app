@@ -15,7 +15,7 @@ class LikeTableSeeder extends Seeder
         $userIds = \App\User::pluck('id')->toArray();
         $likes = [];
         foreach( $userIds as $userId){
-            $like['likeable_type'] = 'User';
+            $like['likeable_type'] = User::class;
             $like['likeable_id'] = $faker->randomElement($userIds);
             $like['is_like'] = $faker->numberBetween(0,1);
             $like['user_id'] = $userId;

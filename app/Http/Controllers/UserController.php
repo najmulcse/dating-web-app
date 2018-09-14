@@ -12,8 +12,6 @@ class UserController extends Controller
 
     public function users()
     {
-        $mutualUsers = $this->getMutualLikeUsers();
-
         $users =  User::all()->except(Auth::id());
         return view('users.index',compact('users','mutualUsers'));
     }
@@ -21,29 +19,33 @@ class UserController extends Controller
     public function nearUsers()
     {
 
-        $users = $this->getUsersFromCurrentLocation(23.768064400000004,90.3588037,3.10686);
+        $users = $this->getUsersFromCurrentLocation(23.768064400000004,90.3588037,5);
         return view('users.near-user-list',compact('users'));
     }
 
-    public function toggleLike( Request $request)
+    public function storeOrToggleLike( Request $request)
     {
         $existingLike =  Like::where('likeable_id', Auth::id())
                 ->where('user_id',$request->id)
                 ->first();
 
+
        if(!is_null($existingLike)){
            $existingLike->update(['is_like' => !$existingLike->is_like]);
 
+           $is_like = $existing_like->is_like;
        }else{
-           Auth()->user()->likes()->create([
+           $like = Auth()->user()->likes()->create([
                'likeable_type' => User::class,
                'is_like'       => true,
                'user_id'       => $request->id
            ]);
+           $is_like = $like->is_like;
        }
+
        $isMutualLike = $this->isMutualLike($request->id);
 
-        return response()->json(['is_mutual'=> $isMutualLike]);
+        return response()->json(['is_mutual'=> $isMutualLike,'is_like' => $is_like]);
 
     }
 
@@ -65,8 +67,10 @@ class UserController extends Controller
 
     public function getUsersFromCurrentLocation( $lat, $long, $distance)
     {
-        return User::all()->filter(function ($user) use ($lat, $long, $distance) {
-            $actual = 3959 * acos(
+        return User::all()
+            ->except(Auth::id())
+            ->filter(function ($user) use ($lat, $long, $distance) {
+            $actual = 6371 * acos(
                     cos(deg2rad($lat)) * cos(deg2rad($user->latitude))
                     * cos(deg2rad($user->longitude) - deg2rad($long))
                     + sin(deg2rad($lat)) * sin(deg2rad($user->latitude))

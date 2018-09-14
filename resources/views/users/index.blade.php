@@ -10,12 +10,6 @@
                         <h2>All Users</h2>
                     </div>
                     <div class="card-body">
-                        @if(session('is_mutual'))
-                            <div class="alert alert-success">
-
-                                {{session('is_mutual')}}
-                            </div>
-                        @endif
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -34,17 +28,17 @@
                                 <th scope="row">{{ ++$id }}</th>
                                 <td>{{ $user->name }}</td>
                                 <td>
-                                    <img src="{{ $user->avatar }}" alt="Picture" height="200px" width="100px">
+                                    <img src="{{ $user->avatar ?$user->avatar : asset('img/user.png') }}" alt="image" class="img-fluid zoom-image">
                                 </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->gender }}</td>
                                 <td>{{ $user->age }} year(s)</td>
                                 <td>
-                                    <a  data-action="{{ route('like.createOrToggle') }}"
+                                    <a  data-action="{{ route('like.storeOrToggle') }}"
                                         href=""
                                         class="btn-link like-unlike"
                                         data-id="{{ $user->id }}">
-                                        {{ Auth::user()->isLiked($user->id) ? 'Unlike':'Like' }}
+                                        {{ Auth::user()->isLiked($user->id) ? 'Dislike':'Like' }}
                                     </a>
                                 </td>
                             </tr>
@@ -58,13 +52,9 @@
             </div>
         </div>
     </div>
-
-
-
 @stop
 
 @section('scripts')
-
     <script>
         $(document).ready( function(){
            $('.like-unlike').on('click', function(e){
@@ -75,14 +65,15 @@
                    id :id
                }
                axios.post(url,data).then(function( response){
-                   alertify.success("Status updated");
+
+                    alertify.success( response.data.is_like === true ? 'Liked' : 'Disliked');
                     if(response.data.is_mutual === true){
                         alertify.alert("It's a Match!");
                     }
-
+                    console.log(response);
                    setTimeout(function(){
                        window.location.reload();
-                   }, 2000);
+                   }, 1000);
                }).catch(function(error){
 
                });
@@ -90,4 +81,20 @@
 
         });
     </script>
+@stop
+
+@section('styles')
+    <style>
+        .zoom-image{
+            transition: transform .2s;
+            border-radius: 3px;
+            height: 40px;
+            width: 50px;
+        }
+        .zoom-image:hover {
+            -ms-transform: scale(1.5);
+            -webkit-transform: scale(1.5);
+            transform: scale(1.8);
+        }
+    </style>
 @stop

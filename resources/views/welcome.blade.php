@@ -1,15 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        Welcome to dating app
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="container-fluid  bg-image">
+
     </div>
 @endsection
+
+@section('styles')
+    <style>
+        .bg-image{
+            background-image: url("img/dating_cover.jpg") ;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+
+@stop

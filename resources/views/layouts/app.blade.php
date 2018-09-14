@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md  navbar-laravel">
+        <nav class="navbar navbar-expand-md">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name') }}
@@ -52,7 +52,7 @@
 
                         @else
                             <li class="nav-item">
-                                <a  class="nav-link" href="{{ route('near.users.list') }}"> Nearest(5km) Users List </a>
+                                <a  class="nav-link" href="{{ route('near.users.list') }}"> Nearest Users(5km)  </a>
                             </li>
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('users.list') }}"> Users List </a>
@@ -80,13 +80,14 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"> </script>
     <script src="{{ asset('js/alertify.min.js') }}"> </script>
 
+    @yield('styles')
     @yield('scripts')
 </body>
 </html>

@@ -7,7 +7,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h2>All Users</h2>
+                        <h2>Users list of around 5km distance</h2>
                     </div>
                     <div class="card-body">
                         @if(session('message'))
