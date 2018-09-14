@@ -52,13 +52,9 @@
             </div>
         </div>
     </div>
-
-
-
 @stop
 
 @section('scripts')
-
     <script>
         $(document).ready( function(){
            $('.like-unlike').on('click', function(e){
@@ -101,5 +97,4 @@
             transform: scale(1.8);
         }
     </style>
-
 @stop
