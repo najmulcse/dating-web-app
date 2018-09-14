@@ -27,12 +27,12 @@ class UserController extends Controller
 
     public function toggleLike( Request $request)
     {
-       $existing_like =  Like::where('likeable_id', Auth::id())
+        $existingLike =  Like::where('likeable_id', Auth::id())
                 ->where('user_id',$request->id)
                 ->first();
 
-       if(!is_null($existing_like)){
-           $existing_like->update(['is_like' => !$existing_like->is_like]);
+       if(!is_null($existingLike)){
+           $existingLike->update(['is_like' => !$existingLike->is_like]);
 
        }else{
            Auth()->user()->likes()->create([
@@ -41,13 +41,13 @@ class UserController extends Controller
                'user_id'       => $request->id
            ]);
        }
-       $is_mutual = $this->isMutual($request->id);
+       $isMutualLike = $this->isMutualLike($request->id);
 
-        return response()->json(['is_mutual'=> $is_mutual]);
+        return response()->json(['is_mutual'=> $isMutualLike]);
 
     }
 
-    private function isMutual($id)
+    private function isMutualLike($id)
     {
         return  Like::where(function($query) use ( $id ){
             $query->where('likeable_id', auth()->id())
