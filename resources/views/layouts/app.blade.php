@@ -21,6 +21,7 @@
     <link href="{{ asset('css/alertify.core.css') }}" rel="stylesheet">
     <link href="{{ asset('css/alertify.default.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">

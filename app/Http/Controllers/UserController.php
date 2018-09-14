@@ -9,18 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    protected $viewPath = 'users';
 
     public function users()
     {
         $users =  User::all()->except(Auth::id());
-        return view('users.index',compact('users','mutualUsers'));
+        return view($this->viewPath.'.index',compact('users','mutualUsers'));
     }
 
     public function nearUsers()
     {
 
         $users = $this->getUsersFromCurrentLocation(23.768064400000004,90.3588037,5);
-        return view('users.near-user-list',compact('users'));
+        return view($this->viewPath.'.near-user-list',compact('users'));
     }
 
     public function storeOrToggleLike( Request $request)

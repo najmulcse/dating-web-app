@@ -82,19 +82,3 @@
         });
     </script>
 @stop
-
-@section('styles')
-    <style>
-        .zoom-image{
-            transition: transform .2s;
-            border-radius: 3px;
-            height: 40px;
-            width: 50px;
-        }
-        .zoom-image:hover {
-            -ms-transform: scale(1.5);
-            -webkit-transform: scale(1.5);
-            transform: scale(1.8);
-        }
-    </style>
-@stop

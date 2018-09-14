@@ -19,7 +19,6 @@
                             @if(count($users))
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Image</th>
                                 <th scope="col">Email</th>
@@ -30,12 +29,11 @@
                             </thead>
                             @endif
                             <tbody>
-                            @forelse($users as $id => $user)
+                            @forelse($users as $user)
                                 <tr>
-                                    <th scope="row">{{ ++$id }}</th>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        <img src="{{ $user->avatar }}" alt="Picture" height="200px" width="100px">
+                                        <img src="{{ $user->avatar ?$user->avatar : asset('img/user.png') }}" alt="image" class="img-fluid zoom-image">
                                     </td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->gender }}</td>
