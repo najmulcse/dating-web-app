@@ -49,4 +49,13 @@ class User extends Authenticatable
                         ->exists();
     }
 
+    public function getDistanceAttribute()
+    {
+        return round(6371 * acos(
+                cos(deg2rad($this->latitude)) * cos(deg2rad(auth()->user()->latitude))
+                * cos(deg2rad(auth()->user()->longitude) - deg2rad($this->longitude))
+                + sin(deg2rad($this->latitude)) * sin(deg2rad(auth()->user()->latitude))
+            ),2);
+    }
+
 }

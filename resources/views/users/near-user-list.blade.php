@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-primary">
                         <h2>Users list of around 5km distance</h2>
                     </div>
                     <div class="card-body">
@@ -33,12 +33,12 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        <img src="{{ $user->avatar ?$user->avatar : asset('img/user.png') }}" alt="image" class="img-fluid zoom-image">
+                                        <img src="{{ !is_null($user->avatar) ?asset('img/'. $user->avatar) : asset('img/user.png')  }}" alt="image" class="img-fluid zoom-image">
                                     </td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->gender }}</td>
-                                    <td>{{ $user->age }}</td>
-                                    <td></td>
+                                    <td>{{ $user->age }} year(s)</td>
+                                    <td>{{ $user->distance }} km</td>
                                 </tr>
                             @empty
                                 <h4> No user available</h4>

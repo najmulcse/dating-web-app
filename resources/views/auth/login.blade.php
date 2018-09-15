@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-6    ">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -50,7 +50,8 @@
                                 </div>
                             </div>
                         </div>
-
+                        <input type="hidden" id="latitude" name="latitude" value="0.00">
+                        <input type="hidden" id="longitude" name="longitude" value="0.00">
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -69,3 +70,26 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+
+    <script>
+        $(document).ready( function(){
+            getLatitudeAndLongitude();
+        });
+        function getLatitudeAndLongitude(){
+
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else{
+                latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+            }
+
+            function showPosition(position){
+                $('#latitude').val(position.coords.latitude);
+                $('#longitude').val(position.coords.longitude);
+            }
+        }
+    </script>
+@stop

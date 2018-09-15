@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/users';
 
     /**
      * Create a new controller instance.
@@ -51,6 +52,9 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'gender' => 'required',
+            'date_of_birth' => 'required',
+            'avatar' => 'required',
         ]);
     }
 
@@ -62,13 +66,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $fileName = null;
+
+        if (Input::file('avatar')->isValid()) {
+            $destinationPath = public_path('img');
+            $extension = Input::file('avatar')->getClientOriginalExtension();
+            $fileName = uniqid().'.'.$extension;
+            Input::file('avatar')->move($destinationPath, $fileName);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'gender' => $data['gender'],
+            'avatar' => $fileName,
             'date_of_birth' => $data['date_of_birth'],
-            'latitude' => 23.768064400000004,
-            'longitude' => 90.3588037,
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
             'password' => bcrypt($data['password']),
         ]);
     }

@@ -22,12 +22,13 @@
     <link href="{{ asset('css/alertify.default.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/datepicker.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md">
+        <nav class="navbar navbar-expand-md bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('/') }}">
                     {{ config('app.name') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -41,25 +42,25 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto text-white">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Log in') }}</a>
+                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Log in') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign up') }}</a>
+                                <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Sign up') }}</a>
                             </li>
 
                         @else
-                            <li class="nav-item">
-                                <a  class="nav-link" href="{{ route('near.users.list') }}"> Nearest Users(5km)  </a>
+                            <li class="nav-item text-white">
+                                <a  class="nav-link text-white" href="{{ route('near.users.list') }}"> Nearest Users(5km)  </a>
                             </li>
                             <li class="nav-item">
-                                <a  class="nav-link" href="{{ route('users.list') }}"> Users List </a>
+                                <a  class="nav-link text-white" href="{{ route('users.list') }}"> Users List </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link text-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -87,7 +88,7 @@
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"> </script>
     <script src="{{ asset('js/alertify.min.js') }}"> </script>
-
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
     @yield('styles')
     @yield('scripts')
 </body>

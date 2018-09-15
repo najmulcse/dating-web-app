@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Sign up') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Sign up') }}">
+                    <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Sign up') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -67,7 +67,19 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
 
+                            <div class="col-md-6">
+                                <input id="avatar" type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}" name="avatar" required>
+
+                                @if ($errors->has('avatar'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('avatar') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
@@ -81,7 +93,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
@@ -89,7 +100,8 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-
+                        <input type="hidden" id="latitude" name="latitude" value="0.00">
+                        <input type="hidden" id="longitude" name="longitude" value="0.00">
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary form-submit">
@@ -107,30 +119,35 @@
 @endsection
 
 @section('scripts')
-    {{--<script>--}}
-            {{--var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),--}}
-                {{--location={--}}
-                    {{--latitude:'',--}}
-                    {{--longitude:''--}}
-                {{--};--}}
 
-            {{--if (navigator.geolocation){--}}
-                {{--navigator.geolocation.getCurrentPosition(showPosition);--}}
-            {{--}--}}
-            {{--else{--}}
-                {{--latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";--}}
-            {{--}--}}
+    <script>
+        // $('.datepicker').datepicker();
 
-            {{--function showPosition(position){--}}
-                {{--location.latitude=position.coords.latitude;--}}
-                {{--location.longitude=position.coords.longitude;--}}
-                {{--alert(location.latitude);--}}
-                {{--alert(location.longitude);--}}
+            $(document).ready( function(){
+                getLatitudeAndLongitude();
+            });
+        function getLatitudeAndLongitude(){
+            var location={
+                    latitude:'',
+                    longitude:''
+                };
 
-                {{--console.log(location.latitude);--}}
-                {{--console.log(location.longitude);--}}
-            {{--}--}}
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else{
+                latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+            }
 
-    {{--</script>--}}
+            function showPosition(position){
+                location.latitude= position.coords.latitude;
+                location.longitude= position.coords.longitude;
+                console.log(position.coords.latitude);
+                console.log(position.coords.longitude);
+                $('#latitude').val(position.coords.latitude);
+                $('#longitude').val(position.coords.longitude);
+            }
+        }
+    </script>
 @stop
 

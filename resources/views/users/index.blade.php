@@ -2,12 +2,12 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid ">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        <h2>All Users</h2>
+                    <div class="card-header bg-primary">
+                        <h2 class="">All Users</h2>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">
@@ -28,18 +28,18 @@
                                 <th scope="row">{{ ++$id }}</th>
                                 <td>{{ $user->name }}</td>
                                 <td>
-                                    <img src="{{ $user->avatar ?$user->avatar : asset('img/user.png') }}" alt="image" class="img-fluid zoom-image">
+                                    <img src="{{ !is_null($user->avatar) ?asset('img/'. $user->avatar) : asset('img/user.png')  }}" alt="image" class="img-fluid zoom-image">
                                 </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->gender }}</td>
                                 <td>{{ $user->age }} year(s)</td>
                                 <td>
-                                    <a  data-action="{{ route('like.storeOrToggle') }}"
-                                        href=""
-                                        class="btn-link like-unlike"
+                                    <button  data-action="{{ route('like.storeOrToggle') }}"
+                                        type="button"
+                                        class="btn btn-sm like-unlike btn-{{ Auth::user()->isLiked($user->id)? 'danger':'success' }}"
                                         data-id="{{ $user->id }}">
                                         {{ Auth::user()->isLiked($user->id) ? 'Dislike':'Like' }}
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                             @empty

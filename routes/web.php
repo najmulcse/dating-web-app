@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/users', 'UserController@users')->name('users.list');
         Route::get('/near-users', 'UserController@nearUsers')->name('near.users.list');
-        Route::post('/toggleLike', 'UserController@storeOrToggleLike')->name('like.storeOrToggle');
+        Route::post('/toggleLike', 'LikeController@storeOrToggleLike')->name('like.storeOrToggle');
 
 
 

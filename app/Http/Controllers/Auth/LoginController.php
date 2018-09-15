@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/users';
 
     /**
      * Create a new controller instance.
@@ -39,7 +39,14 @@ class LoginController extends Controller
     }
     protected function authenticated(Request $request, $user)
     {
-        $this->setSessionData($request);
+        if(!session()->exists('location')){
+            $location = [
+              'latitude' =>  $request->latitude,
+              'longitude' => $request->longitude
+            ];
+            session()->put('location', $location);
+        }
+
     }
 
     public function showLoginForm()
@@ -47,8 +54,12 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    private function setSessionData($request)
+    protected function loggedOut(Request $request)
     {
-
+        if(session()->exists('location'))
+        {
+            session()->flash('location');
+        }
     }
+
 }
